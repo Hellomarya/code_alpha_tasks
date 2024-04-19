@@ -1,4 +1,4 @@
-HANGMAN CODE :
+#TASK 1
 import random
 
 def choose_word(): words = ["hangman", "python", "programming", "computer", "game", "code"] return random.choice(words)
@@ -39,3 +39,87 @@ while True:
         print("Congratulations! You guessed the word:", word)
         break
 hangman()
+
+
+
+#TASK 2
+# CodeAlpha_StockPortfolioTacker
+import requests
+
+class StockPortfolio:
+    def __init__(self):
+        self.stocks = {}
+
+    def add_stock(self, symbol, quantity):
+        if symbol in self.stocks:
+            self.stocks[symbol] += quantity
+        else:
+            self.stocks[symbol] = quantity
+
+    def remove_stock(self, symbol, quantity):
+        if symbol in self.stocks:
+            self.stocks[symbol] -= quantity
+            if self.stocks[symbol] <= 0:
+                del self.stocks[symbol]
+        else:
+            print("Stock not found in portfolio.")
+
+    def get_portfolio_value(self):
+        total_value = 0
+        for symbol, quantity in self.stocks.items():
+            price = self.get_stock_price(symbol)
+            total_value += price * quantity
+        return total_value
+
+    def get_stock_price(self, symbol):
+        api_key = 'YOUR_API_KEY'
+        url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={api_key}'
+        response = requests.get(url)
+        data = response.json()
+        if 'Global Quote' in data:
+            return float(data['Global Quote']['05. price'])
+        else:
+            print("Error fetching stock price.")
+            return 0
+
+# Example usage
+portfolio = StockPortfolio()
+portfolio.add_stock('AAPL', 10)
+portfolio.add_stock('GOOGL', 5)
+print("Portfolio value:", portfolio.get_portfolio_value())
+
+
+#TASK 3
+# CodeAlpha_BasicChatbot
+Task 3 Basic Chatbot
+import nltk
+import random
+
+# Download NLTK data if not already downloaded
+nltk.download('punkt')
+
+# Define responses
+responses = {
+    "hi": ["Hello!", "Hi there!", "Hey!"],
+    "how are you": ["I'm good, thanks!", "I'm doing well, how about you?", "All good here!"],
+    "bye": ["Goodbye!", "See you later!", "Bye! Have a great day!"]
+}
+
+# Function to get a response based on user input
+def get_response(message):
+    message = message.lower()
+    if message in responses:
+        return random.choice(responses[message])
+    else:
+        return "I'm not sure how to respond to that."
+
+# Main loop for chatting
+print("Chatbot: Hello! How can I help you?")
+while True:
+    user_input = input("You: ")
+    if user_input.lower() == 'exit':
+        print("Chatbot: Goodbye!")
+        break
+    response = get_response(user_input)
+    print("Chatbot:", response)
+
